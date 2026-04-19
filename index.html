@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sift | WhatsApp AI Pre-Screener for UK Recruitment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #05070A;
+    --navy-light: #0d121a;
+    --blue: #2BD1FF;
+    --blue-light: #60dcff;
+    --gold: #00FF66;
+    --gray-50: #0d121a;
+    --gray-100: #141c26;
+    --gray-200: #1b2633;
+    --gray-400: #556882;
+    --gray-600: #8E9BAE;
+    --gray-800: #F2F5F8;
+    --green: #00FF66;
+    --red: #FF3366;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; line-height: 1.6; color: var(--gray-800); background: var(--navy); font-size: 16px; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  h1, h2, h3, h4, h5, h6 { font-family: 'Space Grotesk', sans-serif; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(5, 7, 10, 0.95); backdrop-filter: blur(10px); padding: 16px 0; border-bottom: 1px solid var(--gray-200); }
+  nav .container { display: flex; justify-content: space-between; align-items: center; }
+  .logo { color: var(--gray-800); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: -0.5px; display: flex; align-items: center; gap: 10px; }
+  .logo-mark { width: 28px; height: 28px; background: var(--navy); border: 2px solid var(--green); display: flex; align-items: center; justify-content: center; color: var(--green); font-size: 14px; font-family: 'JetBrains Mono', monospace; }
+  .nav-links { display: flex; gap: 24px; align-items: center; }
+  @media (max-width: 768px) { .nav-links { display: none; } }
+  .nav-link { color: var(--gray-800); text-decoration: none; font-size: 14px; font-weight: 500; font-family: 'JetBrains Mono', monospace; }
+  .nav-link:hover { color: var(--green); }
+  .nav-cta { background: var(--green); color: var(--navy); padding: 10px 22px; text-decoration: none; font-weight: 700; font-size: 14px; font-family: 'JetBrains Mono', monospace; border: 1px solid var(--green); transition: all 0.2s; }
+  .nav-cta:hover { background: var(--navy); color: var(--green); box-shadow: 0 0 15px rgba(0, 255, 102, 0.3); }
+
+  /* HERO */
+  .hero { background: var(--navy); color: var(--gray-800); padding: 100px 0 120px; position: relative; overflow: hidden; }
+  .hero-badge { display: inline-block; font-family: 'JetBrains Mono', monospace; background: var(--navy); color: var(--green); padding: 6px 16px; font-size: 13px; font-weight: 600; margin-bottom: 24px; border: 1px solid var(--green); }
+  .hero h1 { font-size: clamp(36px, 5vw, 64px); font-weight: 800; line-height: 1.1; letter-spacing: -2px; margin-bottom: 24px; color: var(--gray-800); }
+  .hero h1 span { color: var(--green); }
+  .hero-sub { font-size: 20px; color: var(--gray-600); max-width: 720px; margin-bottom: 40px; line-height: 1.5; }
+  .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .btn-primary { background: var(--green); color: var(--navy); padding: 16px 32px; text-decoration: none; font-weight: 700; font-size: 16px; transition: all 0.2s; display: inline-block; border: 1px solid var(--green); font-family: 'JetBrains Mono', monospace; }
+  .btn-primary:hover { background: var(--navy); color: var(--green); box-shadow: 0 0 20px rgba(0, 255, 102, 0.4); }
+  .btn-ghost { background: transparent; color: var(--blue); padding: 16px 24px; text-decoration: none; font-weight: 600; font-size: 16px; border: 1px solid var(--blue); transition: all 0.2s; font-family: 'JetBrains Mono', monospace; }
+  .btn-ghost:hover { background: var(--blue); color: var(--navy); box-shadow: 0 0 20px rgba(43, 209, 255, 0.4); }
+  .hero-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; margin-top: 80px; padding-top: 40px; border-top: 1px solid var(--gray-200); }
+  .hero-stat-num { font-size: 36px; font-weight: 700; color: var(--green); letter-spacing: -1px; font-family: 'JetBrains Mono', monospace; }
+  .hero-stat-label { color: var(--gray-600); font-size: 14px; margin-top: 4px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 1px; }
+
+  /* SECTIONS */
+  section { padding: 100px 0; border-bottom: 1px solid var(--gray-200); }
+  .section-alt { background: var(--navy-light); }
+  .section-dark { background: var(--navy); }
+  .section-label { color: var(--blue); font-size: 13px; font-weight: 700; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; }
+  h2 { font-size: clamp(28px, 3.5vw, 44px); font-weight: 800; letter-spacing: -1px; line-height: 1.2; margin-bottom: 24px; color: var(--gray-800); }
+  .section-intro { font-size: 20px; color: var(--gray-600); max-width: 700px; margin-bottom: 64px; }
+
+  /* ANIMATION CLASSES */
+  .anim { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+  .anim.visible { opacity: 1; transform: translateY(0); }
+
+  /* EXEC SUMMARY */
+  .exec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+  .exec-card { background: var(--navy); padding: 32px; border: 1px solid var(--gray-200); transition: all 0.3s; }
+  .exec-card:hover { border-color: var(--green); box-shadow: 0 0 20px rgba(0, 255, 102, 0.15); }
+  .exec-card-icon { color: var(--green); font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 14px; margin-bottom: 24px; border: 1px solid var(--green); display: inline-block; padding: 4px 12px; }
+  .exec-card h3 { font-size: 20px; margin-bottom: 12px; color: var(--gray-800); }
+  .exec-card p { color: var(--gray-600); font-size: 16px; }
+
+  /* PROBLEM */
+  .problem-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .problem-card { padding: 32px; background: var(--navy); border: 1px solid var(--gray-200); border-left: 4px solid var(--red); transition: all 0.3s; }
+  .problem-card:hover { border-color: var(--red); box-shadow: 0 0 20px rgba(255, 51, 102, 0.15); }
+  .problem-tag { display: inline-block; background: transparent; color: var(--red); border: 1px solid var(--red); padding: 4px 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; }
+  .problem-card h3 { color: var(--gray-800); margin-bottom: 12px; font-size: 20px; }
+  .problem-card p { color: var(--gray-600); font-size: 16px; }
+
+  /* COST NUMBERS */
+  .cost-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+  .cost-box { background: var(--navy-light); padding: 32px; border: 1px solid var(--gray-200); transition: all 0.3s; }
+  .cost-box:hover { border-color: var(--green); box-shadow: 0 0 20px rgba(0, 255, 102, 0.15); }
+  .cost-num { font-size: 48px; font-weight: 700; color: var(--green); font-family: 'JetBrains Mono', monospace; letter-spacing: -2px; line-height: 1; margin-bottom: 16px; }
+  .cost-label { color: var(--gray-800); font-weight: 600; margin-bottom: 8px; font-size: 18px; font-family: 'Space Grotesk', sans-serif; }
+  .cost-sub { color: var(--red); font-size: 14px; font-family: 'JetBrains Mono', monospace; }
+
+  /* SOLUTION FLOW */
+  .flow { display: flex; flex-direction: column; gap: 16px; max-width: 720px; margin: 0 auto; }
+  .flow-step { display: flex; align-items: flex-start; gap: 24px; background: var(--navy-light); padding: 32px; border: 1px solid var(--blue); position: relative; }
+  .flow-num { flex-shrink: 0; width: 44px; height: 44px; background: var(--navy); border: 1px solid var(--blue); color: var(--blue); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 18px; }
+  .flow-content h4 { color: var(--gray-800); font-size: 20px; margin-bottom: 8px; }
+  .flow-content p { color: var(--gray-600); font-size: 16px; }
+  .flow-arrow { text-align: center; color: var(--blue); font-size: 24px; font-family: 'JetBrains Mono', monospace; font-weight: 700; margin: 8px 0; }
+
+  /* OFFER BOX */
+  .offer-box { background: var(--navy); padding: 48px; border: 1px solid var(--gray-200); max-width: 760px; margin: 0 auto; }
+  .offer-price-wrap { display: flex; align-items: baseline; gap: 16px; margin-bottom: 8px; }
+  .offer-price { font-size: 72px; font-weight: 700; font-family: 'JetBrains Mono', monospace; letter-spacing: -4px; color: var(--green); line-height: 1; }
+  .offer-per { color: var(--gray-600); font-size: 20px; font-family: 'JetBrains Mono', monospace; }
+  .offer-caption { color: var(--gray-600); margin-bottom: 32px; font-family: 'JetBrains Mono', monospace; font-size: 14px; }
+  .guarantee-badge { display: inline-flex; align-items: center; gap: 10px; background: transparent; color: var(--green); padding: 8px 16px; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 13px; border: 1px solid var(--green); margin-bottom: 32px; text-transform: uppercase; letter-spacing: 1px; }
+  .offer-includes { list-style: none; margin-top: 32px; border-top: 1px solid var(--gray-200); padding-top: 32px; }
+  .offer-includes li { padding: 12px 0; color: var(--gray-800); display: flex; align-items: flex-start; gap: 16px; }
+  .offer-includes li::before { content: '[+]'; color: var(--blue); font-family: 'JetBrains Mono', monospace; font-weight: 700; flex-shrink: 0; }
+
+  /* GUARANTEE */
+  .guarantee-block { background: var(--navy-light); padding: 40px; border: 1px solid var(--green); margin-top: 32px; max-width: 760px; margin-left: auto; margin-right: auto; }
+  .guarantee-block h4 { color: var(--green); font-size: 20px; margin-bottom: 16px; font-family: 'Space Grotesk', sans-serif; }
+  .guarantee-block p { color: var(--gray-600); margin-bottom: 24px; }
+  .guarantee-metrics { background: var(--navy); padding: 24px; border: 1px solid var(--gray-200); }
+  .guarantee-metrics li { padding: 8px 0; color: var(--gray-800); font-weight: 500; list-style: none; display: flex; align-items: center; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 14px; }
+  .guarantee-metrics li::before { content: '>'; color: var(--green); font-weight: 700; }
+
+  /* BUILD TIMELINE */
+  .timeline { position: relative; padding-left: 40px; max-width: 680px; margin: 0 auto; }
+  .timeline::before { content: ''; position: absolute; left: 14px; top: 8px; bottom: 8px; width: 1px; background: var(--blue); }
+  .timeline-item { position: relative; padding-bottom: 48px; }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-item::before { content: ''; position: absolute; left: -30px; top: 6px; width: 8px; height: 8px; background: var(--navy); border: 2px solid var(--blue); }
+  .timeline-item:last-child::before { border-color: var(--green); }
+  .timeline-week { color: var(--blue); font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .timeline-item h4 { color: var(--gray-800); font-size: 20px; margin-bottom: 12px; }
+  .timeline-item p { color: var(--gray-600); font-size: 16px; }
+
+  /* WHY US */
+  .why-list { background: var(--navy-light); border: 1px solid var(--gray-200); padding: 40px; margin-bottom: 48px; border-left: 4px solid var(--blue); }
+  .why-list h3 { color: var(--gray-800); font-size: 24px; margin-bottom: 24px; }
+  .why-list ul { list-style: none; padding: 0; }
+  .why-list li { padding: 16px 0; color: var(--gray-800); font-size: 16px; border-bottom: 1px solid var(--gray-200); display: flex; gap: 16px; align-items: flex-start; }
+  .why-list li:last-child { border-bottom: none; padding-bottom: 0; }
+  .why-list li .check { color: var(--green); font-family: 'JetBrains Mono', monospace; font-weight: 700; }
+
+  .compare-table { width: 100%; border-collapse: collapse; background: var(--navy); border: 1px solid var(--gray-200); }
+  .compare-table th { background: var(--navy-light); color: var(--gray-800); padding: 20px; text-align: left; font-weight: 700; font-size: 14px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--gray-200); }
+  .compare-table td { padding: 20px; border-bottom: 1px solid var(--gray-200); font-size: 16px; vertical-align: top; color: var(--gray-800); }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-us { color: var(--green); font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+  .compare-them { color: var(--gray-600); }
+
+  /* ROI */
+  .roi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-top: 40px; }
+  .roi-card { background: var(--navy); padding: 32px; border: 1px solid var(--gray-200); }
+  .roi-period { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+  .roi-card ul { list-style: none; }
+  .roi-card ul li { padding: 8px 0; color: var(--gray-800); font-size: 15px; display: flex; gap: 12px; }
+  .roi-card ul li::before { content: '>'; color: var(--blue); font-family: 'JetBrains Mono', monospace; font-weight: 700; }
+
+  .roi-summary { background: var(--navy-light); color: var(--gray-800); padding: 40px; border: 1px solid var(--green); margin-top: 40px; text-align: center; }
+  .roi-summary h3 { font-size: 28px; margin-bottom: 12px; font-weight: 800; color: var(--green); }
+  .roi-summary p { font-size: 18px; color: var(--gray-600); }
+
+  /* FAQ */
+  .faq-item { background: var(--navy); border: 1px solid var(--gray-200); margin-bottom: 16px; transition: all 0.2s; }
+  .faq-item:hover { border-color: var(--blue); }
+  .faq-q { padding: 24px; font-weight: 700; font-family: 'Space Grotesk', sans-serif; color: var(--gray-800); cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 18px; }
+  .faq-q::after { content: '+'; color: var(--blue); font-family: 'JetBrains Mono', monospace; font-size: 20px; transition: transform 0.2s; }
+  .faq-item.open .faq-q::after { transform: rotate(45deg); }
+  .faq-a { padding: 0 24px; max-height: 0; overflow: hidden; transition: all 0.3s ease-out; color: var(--gray-600); font-size: 16px; }
+  .faq-item.open .faq-a { padding: 0 24px 24px; max-height: 400px; }
+
+  /* CTA SECTION */
+  .cta-final { background: var(--navy-light); text-align: center; padding: 120px 0; border-bottom: none; }
+  .cta-final h2 { color: var(--gray-800); font-size: clamp(32px, 4vw, 56px); margin-bottom: 24px; }
+  .cta-final p { font-size: 20px; color: var(--gray-600); margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; }
+  .btn-gold { background: var(--green); color: var(--navy); padding: 20px 48px; font-family: 'JetBrains Mono', monospace; border: 1px solid var(--green); text-decoration: none; font-weight: 700; font-size: 18px; transition: all 0.2s; display: inline-block; }
+  .btn-gold:hover { background: var(--navy); color: var(--green); box-shadow: 0 0 20px rgba(0, 255, 102, 0.4); }
+  .cta-tagline { margin-top: 32px; color: var(--gray-600); font-family: 'JetBrains Mono', monospace; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+
+  /* FOOTER */
+  footer { background: var(--navy); color: var(--gray-600); padding: 40px 0; border-top: 1px solid var(--gray-200); text-align: center; font-size: 14px; font-family: 'JetBrains Mono', monospace; }
+  footer a { color: var(--gray-800); text-decoration: none; border-bottom: 1px solid var(--gray-600); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; }
+  footer a:hover { color: var(--green); border-color: var(--green); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="container">
+    <div class="logo">
+      <div class="logo-mark">S</div>
+      <span>Sift</span>
+    </div>
+    <div class="nav-links">
+      <a href="#problem" class="nav-link">Problem</a>
+      <a href="#solution" class="nav-link">System Flow</a>
+      <a href="#offer" class="nav-link">Pricing</a>
+      <a href="#roi" class="nav-link">Results</a>
+    </div>
+    <a href="#cta" class="nav-cta">Book Call</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">[ UK Recruitment Deployment ]</div>
+    <h1>Candidate applies. <span>Respond in seconds.</span></h1>
+    <p class="hero-sub">WhatsApp pre-screening auto-qualifies candidates and books interviews directly into your calendar. Stop screening. Start placing.</p>
+    <div class="hero-cta">
+      <a href="#cta" class="btn-primary">Book Walkthrough</a>
+      <a href="#offer" class="btn-ghost">View Offer Details</a>
+    </div>
+    <div class="hero-stats">
+      <div class="anim">
+        <div class="hero-stat-num">15-20 hrs</div>
+        <div class="hero-stat-label">Screening time per recruiter/week</div>
+      </div>
+      <div class="anim">
+        <div class="hero-stat-num">30 days</div>
+        <div class="hero-stat-label">Performance refund guarantee</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXEC SUMMARY -->
+<section class="section-alt" id="glance">
+  <div class="container">
+    <div class="section-label">System Parameters</div>
+    <h2>Core workflow overview.</h2>
+    <p class="section-intro">Automated logic connects job ads to your calendar. Screens via WhatsApp. Books qualified candidates. Logs data to your ATS.</p>
+    <div class="exec-grid">
+      <div class="exec-card anim">
+        <div class="exec-card-icon">OPERATOR</div>
+        <h3>UK recruitment</h3>
+        <p>3-20 staff. IT Contract, Finance, Healthcare, SaaS Sales, Legal sectors.</p>
+      </div>
+      <div class="exec-card anim">
+        <div class="exec-card-icon">FUNCTION</div>
+        <h3>WhatsApp screener</h3>
+        <p>Instant response. AI qualification. Auto-booking. Full ATS synchronization.</p>
+      </div>
+      <div class="exec-card anim">
+        <div class="exec-card-icon">COST</div>
+        <h3>£1,500 / month</h3>
+        <p>Flat retainer. Setup, complex integration, and ongoing support included.</p>
+      </div>
+      <div class="exec-card anim">
+        <div class="exec-card-icon">TERMS</div>
+        <h3>Zero risk</h3>
+        <p>30-day guarantee. Target metrics missed equates to full refund.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE PROBLEM -->
+<section id="problem">
+  <div class="container">
+    <div class="section-label">The Drain</div>
+    <h2>Speed dictates placements.</h2>
+    <p class="section-intro">Candidates commit to the first response. Manual screening loses deals and burdens consultants.</p>
+    <div class="problem-row">
+      <div class="problem-card anim">
+        <span class="problem-tag">Bottleneck_01</span>
+        <h3>Response latency</h3>
+        <p>24-hour wait times cost candidates. The market demands instant reply.</p>
+      </div>
+      <div class="problem-card anim">
+        <span class="problem-tag">Bottleneck_02</span>
+        <h3>Screening overhead</h3>
+        <p>15-20 hours wasted per week on repeated qualifying calls. Blocks business development.</p>
+      </div>
+      <div class="problem-card anim">
+        <span class="problem-tag">Bottleneck_03</span>
+        <h3>Scheduling friction</h3>
+        <p>Email ping-pong delays interviews. Administrative drag limits operating volume.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT IT COSTS -->
+<section class="section-alt">
+  <div class="container">
+    <div class="section-label">Impact Analysis</div>
+    <h2>Operational drag quantified.</h2>
+    <p class="section-intro">Hidden costs of manual screening deplete margins and extend timelines.</p>
+    <div class="cost-grid">
+      <div class="cost-box anim">
+        <div class="cost-num">15-20 hrs</div>
+        <div class="cost-label">Screening time</div>
+        <div class="cost-sub">Per recruiter per week</div>
+      </div>
+      <div class="cost-box anim">
+        <div class="cost-num">£3k-4k</div>
+        <div class="cost-label">Admin burden cost</div>
+        <div class="cost-sub">Monthly recruiter base rate</div>
+      </div>
+      <div class="cost-box anim">
+        <div class="cost-num">1-2 days</div>
+        <div class="cost-label">Added time-to-fill</div>
+        <div class="cost-sub">Initial delays compound</div>
+      </div>
+      <div class="cost-box anim">
+        <div class="cost-num">5-15%</div>
+        <div class="cost-label">Placements lost</div>
+        <div class="cost-sub">Competitors capture market</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE SOLUTION -->
+<section id="solution">
+  <div class="container">
+    <div class="section-label">Architecture</div>
+    <h2>System flow execution.</h2>
+    <p class="section-intro">Four automated steps. Background execution. No new software required.</p>
+    <div class="flow">
+      <div class="flow-step anim">
+        <div class="flow-num">01</div>
+        <div class="flow-content">
+          <h4>Candidate triggers entry</h4>
+          <p>User clicks WhatsApp link via job ad, LinkedIn, or site to begin conversation. Zero friction.</p>
+        </div>
+      </div>
+      <div class="flow-arrow anim">|</div>
+      <div class="flow-step anim">
+        <div class="flow-num">02</div>
+        <div class="flow-content">
+          <h4>AI executes screening protocol</h4>
+          <p>System requests required fields (role fit, location, notice period). Parses and scores answers instantly.</p>
+        </div>
+      </div>
+      <div class="flow-arrow anim">|</div>
+      <div class="flow-step anim">
+        <div class="flow-num">03</div>
+        <div class="flow-content">
+          <h4>System books calendar slot</h4>
+          <p>Qualified candidates access calendar API. Interview secured automatically.</p>
+        </div>
+      </div>
+      <div class="flow-arrow anim">|</div>
+      <div class="flow-step anim">
+        <div class="flow-num">04</div>
+        <div class="flow-content">
+          <h4>Data pushes to ATS</h4>
+          <p>Candidate record, screening output, and schedule state serialize into Bullhorn or Vincere.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE OFFER -->
+<section id="offer" class="section-alt">
+  <div class="container">
+    <div class="section-label">Deployment Terms</div>
+    <h2>Pricing schedule.</h2>
+    <p class="section-intro">Flat monthly cost. No per-seat variables. No hidden setup fees.</p>
+
+    <div class="offer-box anim">
+      <div class="guarantee-badge">30-day money-back guarantee</div>
+      <div class="offer-price-wrap">
+        <span class="offer-price">£1,500</span>
+        <span class="offer-per">/ month</span>
+      </div>
+      <p class="offer-caption">Month-to-month. Cancel anytime. No demo required.</p>
+      <ul class="offer-includes">
+        <li>WhatsApp Business API & number provisioning</li>
+        <li>Custom AI screening logic engineering</li>
+        <li>Calendar integration (Google/Outlook)</li>
+        <li>ATS native sync (Bullhorn/Vincere)</li>
+        <li>14-day production launch</li>
+        <li>Monthly conversion optimization</li>
+        <li>Ongoing technical support</li>
+      </ul>
+    </div>
+
+    <div class="guarantee-block anim">
+      <h4>Performance Guarantee</h4>
+      <p>Within 30 days we hit target metrics or refund the £1,500. No friction. No paperwork.</p>
+      <ul class="guarantee-metrics">
+        <li><strong>> 100 qualified candidates screened</strong> via WhatsApp</li>
+        <li><strong>> 8 interviews auto-booked</strong> to calendar</li>
+      </ul>
+      <p style="margin-top: 16px; font-size: 14px; color: var(--gray-400); font-family: 'JetBrains Mono', monospace;">Commit traffic. We execute.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE BUILD IT -->
+<section>
+  <div class="container">
+    <div class="section-label">Implementation</div>
+    <h2>14 days to production.</h2>
+    <p class="section-intro">Enterprise-grade API utilization. Faster delivery. Zero engineering on your side.</p>
+    <div class="timeline">
+      <div class="timeline-item anim">
+        <div class="timeline-week">Days 01-03 </div>
+        <h4>Discovery mapping</h4>
+        <p>Capture role requirements, calendar rules, ATS fields. Acquire logo and ad copy.</p>
+      </div>
+      <div class="timeline-item anim">
+        <div class="timeline-week">Days 04-10 </div>
+        <h4>System build</h4>
+        <p>Provision communication lines. Configure AI states. Connect ATS strings. Stress test load.</p>
+      </div>
+      <div class="timeline-item anim">
+        <div class="timeline-week">Days 11-14 </div>
+        <h4>Production launch</h4>
+        <p>Go live. Monitor traffic inputs. Deploy same-day patches for edge cases.</p>
+      </div>
+      <div class="timeline-item anim">
+        <div class="timeline-week">Continuous </div>
+        <h4>Monthly tuning</h4>
+        <p>Review conversion analytics. Refine screening logic. Optimize booking yields.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="section-alt">
+  <div class="container">
+    <div class="section-label">Positioning</div>
+    <h2>Narrow focus. High utility.</h2>
+    <p class="section-intro">The market utilizes hallucinating CV parsers or generic chatbots. We built a specific pipe for the application gap.</p>
+
+    <div class="why-list anim">
+      <h3>Why Sift operators win.</h3>
+      <ul>
+        <li><span class="check">[+]</span><span><strong>Syncs to Bullhorn/Vincere.</strong> Does not replace ATS. Zero migration danger.</span></li>
+        <li><span class="check">[+]</span><span><strong>£1,500/month flat.</strong> Transparent pricing absent mandatory discovery calls.</span></li>
+        <li><span class="check">[+]</span><span><strong>Outcome guarantee.</strong> Target metrics embedded in contract or full refund.</span></li>
+        <li><span class="check">[+]</span><span><strong>UK focus.</strong> UK numbers, UK operating hours, UK privacy compliance standard.</span></li>
+        <li><span class="check">[+]</span><span><strong>Direct founder access.</strong> Support routes to engineering. Zero ticket queuing.</span></li>
+      </ul>
+    </div>
+
+    <table class="compare-table anim">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Generic Chatbots</th>
+          <th>CV Parsing Tools</th>
+          <th>Sift</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Response speed</strong></td>
+          <td class="compare-them">Fast, generic</td>
+          <td class="compare-them">N/A</td>
+          <td class="compare-us">Instant, role-specific</td>
+        </tr>
+        <tr>
+          <td><strong>Recruitment design</strong></td>
+          <td class="compare-them">Requires heavy config</td>
+          <td class="compare-them">Partial</td>
+          <td class="compare-us">Purpose-built</td>
+        </tr>
+        <tr>
+          <td><strong>Auto-booking</strong></td>
+          <td class="compare-them">Add-on required</td>
+          <td class="compare-them">No</td>
+          <td class="compare-us">Included</td>
+        </tr>
+        <tr>
+          <td><strong>ATS sync</strong></td>
+          <td class="compare-them">Complex DIY</td>
+          <td class="compare-them">Variable</td>
+          <td class="compare-us">Native included</td>
+        </tr>
+        <tr>
+          <td><strong>Liability vector</strong></td>
+          <td class="compare-us">Low</td>
+          <td class="compare-them">High (hallucination)</td>
+          <td class="compare-us">Low (self-reported)</td>
+        </tr>
+        <tr>
+          <td><strong>Time to production</strong></td>
+          <td class="compare-them">4-8 weeks</td>
+          <td class="compare-them">2-4 weeks</td>
+          <td class="compare-us">14 days</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ROI -->
+<section id="roi">
+  <div class="container">
+    <div class="section-label">Yield</div>
+    <h2>Timeline to ROI.</h2>
+    <p class="section-intro">Operational trajectory for a standard 3-10 person agency.</p>
+
+    <div class="roi-grid">
+      <div class="roi-card anim">
+        <div class="roi-period">Week 1-2</div>
+        <ul>
+          <li>Workflow live online</li>
+          <li>Candidates stream via WhatsApp</li>
+          <li>Screening data caches to ATS</li>
+        </ul>
+      </div>
+      <div class="roi-card anim">
+        <div class="roi-period">Week 3-4</div>
+        <ul>
+          <li>>50 candidates processed</li>
+          <li>>4 interviews auto-booked</li>
+          <li>>5 hours saved per operator</li>
+        </ul>
+      </div>
+      <div class="roi-card anim">
+        <div class="roi-period">Month 2</div>
+        <ul>
+          <li>>100 candidates processed</li>
+          <li>>15 interviews auto-booked</li>
+          <li>First placement from automated supply</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="roi-summary anim">
+      <h3>1 placement = 5-10x ROI.</h3>
+      <p>A £60k placement at 15% commission totals £9,000. Month one covers half a year of Sift operation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section-alt">
+  <div class="container">
+    <div class="section-label">Data Support</div>
+    <h2>Common queries.</h2>
+
+    <div style="max-width: 800px; margin: 0 auto;">
+      <div class="faq-item anim">
+        <div class="faq-q">Will candidates actually use WhatsApp?</div>
+        <div class="faq-a">WhatsApp commands a 50%+ reply rate in UK recruitment. Materially higher than email. Preferred text channel for candidates. SMS fallback included.</div>
+      </div>
+      <div class="faq-item anim">
+        <div class="faq-q">What ATS platforms connect?</div>
+        <div class="faq-a">Bullhorn and Vincere included natively. Custom API pipes built for other systems typically add 3-5 days to deployment schedule.</div>
+      </div>
+      <div class="faq-item anim">
+        <div class="faq-q">How does AI apply screening parameters?</div>
+        <div class="faq-a">Algorithms score against approved role criteria. Cutoff thresholds determined by agency constraint. Edge cases flag for human override.</div>
+      </div>
+      <div class="faq-item anim">
+        <div class="faq-q">What is the training load for staff?</div>
+        <div class="faq-a">Zero. Interviews post to standard calendar. Data writes to standard ATS view. Operators simply start their day with pre-booked calls.</div>
+      </div>
+      <div class="faq-item anim">
+        <div class="faq-q">Are there lock-in terms?</div>
+        <div class="faq-a">No. Run month-to-month. Cancel anytime. 30-day target metric guarantee reduces initial capital risk.</div>
+      </div>
+      <div class="faq-item anim">
+        <div class="faq-q">Are there usage overages?</div>
+        <div class="faq-a">Infrastructural load (WhatsApp API, LLM cycles) absorbed within the £1,500 retainer. Zero variable costs passed to agency.</div>
+      </div>
+      <div class="faq-item anim">
+        <div class="faq-q">How is GDPR handled?</div>
+        <div class="faq-a">Compliant structure. Data flows from WhatsApp directly to ATS without persisting on our servers beyond operational logging. Processing agreements supplied.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta" class="cta-final">
+  <div class="container">
+    <h2>Deploy automated screening.</h2>
+    <p>Book a 15-minute operational walkthrough. Observe live system configurations.</p>
+    <a href="https://cal.com/casepulse.lgxai/discovery-call" class="btn-gold">Book Discovery Call -></a>
+    <p class="cta-tagline">Working demos. No slide decks.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>Sift | WhatsApp AI Pre-Screening | <a href="mailto:lukas@sift.lgxai.org">Contact</a></p>
+  </div>
+</footer>
+
+<script>
+  // Accordion Logic
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.faq-q').addEventListener('click', () => {
+      item.classList.toggle('open');
+    });
+  });
+
+  // Scroll Animation Observer
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+  };
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.anim').forEach(el => {
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
