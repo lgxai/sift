@@ -614,12 +614,21 @@
     observer.observe(el);
   });
 
-  // Open Cal popup on button click
-  function openCalPopup(e) {
+  // Open Cal floating popup when button is clicked
+  window.openCalPopup = function(e) {
     e.preventDefault();
-    // Open Cal.com booking link in a modal/popup window
-    window.open('https://cal.com/casepulse.lgxai/discovery-call', 'cal-booking', 'width=600,height=700,resizable=yes');
-  }
+    // Ensure Cal library is loaded, then open the floating popup
+    if (window.Cal && window.Cal.ns && window.Cal.ns["discovery-call"]) {
+      window.Cal.ns["discovery-call"]("openFloatingPopup", {});
+    } else {
+      // Fallback: try again in 500ms if Cal not fully loaded
+      setTimeout(() => {
+        if (window.Cal && window.Cal.ns && window.Cal.ns["discovery-call"]) {
+          window.Cal.ns["discovery-call"]("openFloatingPopup", {});
+        }
+      }, 500);
+    }
+  };
 </script>
 
 <!-- Cal.com floating-popup embed code -->
