@@ -617,15 +617,9 @@
   // Open Cal popup on button click
   function openCalPopup(e) {
     e.preventDefault();
-    if (window.Cal && window.Cal.ns && window.Cal.ns["discovery-call"]) {
-      window.Cal.ns["discovery-call"]("showFloatingPopup", {});
-    }
+    // Open Cal.com booking link in a modal/popup window
+    window.open('https://cal.com/casepulse.lgxai/discovery-call', 'cal-booking', 'width=600,height=700,resizable=yes');
   }
-
-  // Attach popup handler to all booking buttons
-  document.querySelectorAll('a[data-cal-link]').forEach(btn => {
-    btn.addEventListener('click', openCalPopup);
-  });
 </script>
 
 <!-- Cal.com floating-popup embed code -->
