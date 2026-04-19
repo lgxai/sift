@@ -617,16 +617,21 @@
   // Open Cal floating popup when button is clicked
   window.openCalPopup = function(e) {
     e.preventDefault();
-    // Ensure Cal library is loaded, then open the floating popup
-    if (window.Cal && window.Cal.ns && window.Cal.ns["discovery-call"]) {
-      window.Cal.ns["discovery-call"]("openFloatingPopup", {});
+    // Find and click the Cal.com floating button
+    const calButton = document.querySelector('[data-testid="cal-floating-button"]') ||
+                      document.querySelector('button[aria-label*="Cal"]') ||
+                      document.querySelector('[data-cal-button]');
+
+    if (calButton) {
+      calButton.click();
     } else {
-      // Fallback: try again in 500ms if Cal not fully loaded
+      // Fallback: try to find it in a moment
       setTimeout(() => {
-        if (window.Cal && window.Cal.ns && window.Cal.ns["discovery-call"]) {
-          window.Cal.ns["discovery-call"]("openFloatingPopup", {});
-        }
-      }, 500);
+        const button = document.querySelector('[data-testid="cal-floating-button"]') ||
+                       document.querySelector('button[aria-label*="Cal"]') ||
+                       document.querySelector('[data-cal-button]');
+        if (button) button.click();
+      }, 300);
     }
   };
 </script>
