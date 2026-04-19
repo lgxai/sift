@@ -197,7 +197,7 @@
       <a href="#offer" class="nav-link">Pricing</a>
       <a href="#roi" class="nav-link">Results</a>
     </div>
-    <a href="#cta" class="nav-cta">Book Call</a>
+    <a href="javascript:void(0)" onclick="openCalPopup(event)" class="nav-cta">Book Call</a>
   </div>
 </nav>
 
@@ -208,7 +208,7 @@
     <h1>Candidate applies. <span>Respond in seconds.</span></h1>
     <p class="hero-sub">WhatsApp pre-screening auto-qualifies candidates and books interviews directly into your calendar. Stop screening. Start placing.</p>
     <div class="hero-cta">
-      <a href="#cta" class="btn-primary">Book Walkthrough</a>
+      <a href="javascript:void(0)" onclick="openCalPopup(event)" class="btn-primary">Book Walkthrough</a>
       <a href="#offer" class="btn-ghost">View Offer Details</a>
     </div>
     <div class="hero-stats">
@@ -576,7 +576,7 @@
   <div class="container">
     <h2>Deploy automated screening.</h2>
     <p>Book a 15-minute operational walkthrough. Observe live system configurations.</p>
-    <a href="https://cal.com/casepulse.lgxai/discovery-call" class="btn-gold">Book Discovery Call -></a>
+    <a href="javascript:void(0)" onclick="openCalPopup(event)" class="btn-gold">Book Discovery Call -></a>
     <p class="cta-tagline">Working demos. No slide decks.</p>
   </div>
 </section>
@@ -612,6 +612,19 @@
 
   document.querySelectorAll('.anim').forEach(el => {
     observer.observe(el);
+  });
+
+  // Open Cal popup on button click
+  function openCalPopup(e) {
+    e.preventDefault();
+    if (window.Cal && window.Cal.ns && window.Cal.ns["discovery-call"]) {
+      window.Cal.ns["discovery-call"]("showFloatingPopup", {});
+    }
+  }
+
+  // Attach popup handler to all booking buttons
+  document.querySelectorAll('a[data-cal-link]').forEach(btn => {
+    btn.addEventListener('click', openCalPopup);
   });
 </script>
 
